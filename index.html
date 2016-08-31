@@ -1,47 +1,120 @@
 <html>
-  <head>
-    	<meta charset="UTF-8">
-        <title>Caravela Host</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#ffffff">
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-        <link href="https://fonts.googleapis.com/css?family=Oswald|Shadows+Into+Light" rel="stylesheet">
-        <style>
-            body, html{
-                margin:0;
-                padding:0;
-                font-family: 'Open Sans', sans-serif;
-                color:#202020;
-                display:table;
-                width:100%;
-                height:100%;
-            }
-            
-            body > div {
-                display: table-cell;
-                vertical-align:middle;
-                text-align:center;
-            }
-            
-            #logo{
-                font-family: 'Shadows Into Light', cursive;
-                font-size:300px;
-                line-height:310px;
-            }
-            
-            #logo-sub{
-                font-size:32px;
-            }
-        </style>
-  </head>
-  <body>
-    <div>
-        <div id="logo">&lt;\&gt;</div>
-        <div id="logo-sub">Caravela</div>
-        <div>less than back slash, greater than.</div>
+<head>
+ <meta charset="UTF-8">
+ <title>Caravela - desenvolvimento de soluções digitais</title>
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="theme-color" content="#ffffff">
+ <link href="https://fonts.googleapis.com/css?family=Open+Sans|Shadows+Into+Light" rel="stylesheet">
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+ <script src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.4/vendors/jquery.easings.min.js"></script>
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.4/vendors/scrolloverflow.min.js"></script>
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.4/jquery.fullPage.min.js"></script>
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.4/jquery.fullPage.min.css">
+
+ <link href="styles/style.css" rel="stylesheet">  
+ <script type="text/javascript">
+ $(document).ready(function() {
+  $('#fullpage').fullpage();
+});
+ </script>
+</head>
+<body>
+  <div id="fullpage">
+    <div class="section">
+      <div class="section-content align-center text-center">
+        <div>
+          <div id="logo">&lt;\&gt;</div>
+          <div id="logo-sub">Caravela</div>
+          <div>desenvolvimento de soluções digitais</div>
+        </div>
+      </div>
     </div>
-    
-  
-  </body>
+    <div id="contact-us" class="section">
+      <div class="light">
+        <div class="section-content align-bottom align-center">
+          <div>
+           <h2 style="padding:0;margin:0;margin-left:50px;font-size:50px;">Contacto</h2>
+         </div>
+       </div>
+     </div>
+     <div class="dark">
+      <div class="section-content align-middle align-center">
+        <div>
+          <br>
+          <br>
+          <form class="form-horizontal" id="email-form">
+            <input type="hidden" name="_subject" value="Formulário de contacto da Caravela" />
+            <input type="hidden" name="_format" value="plain" />
+            <input type="text" name="_gotcha" style="display:none" />
+
+            <div class="form-group">
+              <label for="inpNome" class="col-sm-3 control-label">Nome</label>
+              <div class="col-sm-9">
+                <input name="name" type="text" class="form-control" id="inpNome" placeholder="O primeiro e último nome"required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inpEmail" class="col-sm-3 control-label">Email</label>
+              <div class="col-sm-9">
+                <input name="email" type="email" class="form-control" id="inpEmail" placeholder="Um e-mail válido para contacto" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="txtMessage" class="col-sm-3 control-label">Mensagem</label>
+              <div class="col-sm-9">
+                <textarea name="message" id="txtMessage" class="form-control" rows="3" placeholder="Introduza a sua mensagem" required></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9 col-sm-offset-3">
+                <input class="btn btn-default form-control" type="submit" style="font-weight:bold; margin: 10px 0;background:#eee;" value="Enviar mensagem">
+              </div>
+            </div>
+            <div class="form-group" id="thanks" style="display:none;font-size: 12px;margin-top: -15px;">
+              <div class="col-sm-9 col-sm-offset-3">
+                A mensagem foi enviada. Obrigado.
+              </div>
+            </div>
+          </form>
+          <script type="text/javascript">
+          $("#email-form").on('submit', function(){
+            var form = $(this);
+
+            $.ajax({
+              url: "//formspree.io/web@caravela.16mb.com",
+              type: "POST",
+              data: form.serialize(),
+              dataType:"json",
+              success: function(data){
+                if(data.success){
+                  form.find("input[type!='submit'], textarea").val("");
+                  form.find("input, textarea").prop('disabled', false);
+                  $("#thanks").show();
+                }
+              }
+            });
+
+            $("#thanks").hide();
+            form.find("input, textarea").prop('disabled', true);
+            return false;
+          });
+          </script>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+
+
+</body>
 </html>
